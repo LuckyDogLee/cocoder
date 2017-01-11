@@ -7,7 +7,7 @@
         <router-link to="/register">注册</router-link>
       </nav>
       <nav v-if="this.$store.state.hasLogin">
-        <router-link to="/login">+</router-link>
+        <router-link to="/add" id="addIcon">+</router-link>
         <a @click="logout">登出</a>
       </nav>
     </header>
@@ -16,7 +16,7 @@
     </main>
     <footer>
       <nav id="nav">
-        <router-link to="/news/document">文档</router-link>
+        <router-link to="/news/doc">文档</router-link>
         <router-link to="/news/blog">博客</router-link>
         <router-link to="/news/book">书籍</router-link>
         <router-link to="/news/video">视频</router-link>
@@ -42,18 +42,7 @@
     methods: {
       logout: function() {
         this.$store.commit('logout');
-        this.$router.push('/news/document');
-      },
-      navigate: function(tab) {
-        // axios.get('/api/v1/topics?page=168&limit=40&tab=' + tab)
-        //   .then(function (response) {
-        //      console.log(response);
-        //      cnode.content = response.data.data;
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
-
+        this.$router.push('/news/doc');
       }
     }
   }
@@ -63,7 +52,7 @@
   body {
     margin: 0;
     background-color: #f2f3f5;
-    font-family: sans-serif;
+    font-family: "Microsoft YaHei", sans-serif;
   }
 
   h1 {
@@ -75,6 +64,11 @@
     text-decoration: none;
     color: inherit;
     font-family: inherit;
+    cursor: pointer;
+  }
+
+  a:hover {
+    font-weight: bolder;
   }
 
   #app header,
@@ -147,5 +141,12 @@
   #app footer nav a.router-link-active {
     color: #03a9f4;
     font-weight: bolder;
+  }
+
+  #addIcon {
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 1.5rem;
+    padding-right: 1rem;
   }
 </style>

@@ -1,9 +1,17 @@
 <template>
-  <div class="news-list-nav">
+  <!-- <div class="news-list-nav">
     <router-link v-if="page > 1" :to="'/' + type + '/' + (page - 1)">&lt; prev</router-link>
     <a v-else class="disabled">&lt; prev</a>
     <span>{{ page }}/{{ maxPage }}</span>
     <router-link v-if="hasMore" :to="'/' + type + '/' + (page + 1)">more &gt;</router-link>
+    <a v-else class="disabled">more &gt;</a>
+  </div> -->
+
+  <div class="news-list-nav">
+    <a v-if="page > 1" @click="prev">&lt; prev</a>
+    <a v-else class="disabled">&lt; prev</a>
+    <span>{{ page }}/{{ maxPage }}</span>
+    <a v-if="hasMore" @click="next">more &gt;</a>
     <a v-else class="disabled">more &gt;</a>
   </div>
 </template>
@@ -16,17 +24,29 @@
       },
       page () {
         // return Number(this.$store.state.route.params.page) || 1
-        return 1;
+        return this.$store.state.pageNo;
       },
-      maxPage () {
-        // const { itemsPerPage, lists } = this.$store.state
-        // return Math.ceil(lists[this.type].length / itemsPerPage)
-        return 6;
+      maxPage() {
+        return this.$store.state.totalPage;
       },
       hasMore () {
         return this.page < this.maxPage
       }
     },
+    methods: {
+      prev: function() {
+        this.$store.commit('decrement');
+        this.$store.dispatch('fetchListData', {
+          type: this.$route.params.type
+        });
+      },
+      next: function() {
+        this.$store.commit('increment');
+        this.$store.dispatch('fetchListData', {
+          type: this.$route.params.type
+        });
+      }
+    }
   }
 </script>
 

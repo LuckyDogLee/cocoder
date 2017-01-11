@@ -10,10 +10,12 @@
       {{ error }}
     </div>
 
-    <ul v-if="post" class="content">
-      <li class="news-item">
-        <span>{{ post.title }}</span>
-        <span>{{ post.body }}</span>
+    <ul class="content">
+      <li class="news-item" v-for="item in news">
+        <router-link :to="'/news/' + $route.params.type + '/' + item.id">
+          <span>{{ item.title }}</span>
+          <span>{{ item.date }}</span>
+        </router-link>
       </li>
     </ul>
   </div>
@@ -33,10 +35,18 @@
         error: null
       }
     },
+    computed: {
+      news() {
+        return this.$store.state.lists[this.$route.params.type];
+      },
+      totalPage() {
+        return this.$store.state.totalPage;
+      }
+    },
     created () {
       // 组件创建完后获取数据，
       // 此时 data 已经被 observed 了
-      this.fetchData()
+      this.fetchData();
     },
     watch: {
       // 如果路由有变化，会再次执行该方法
@@ -57,10 +67,9 @@
         //   }
         // })
         
-        this.post = {
-          title: this.$route.params.type + ' title',
-          body: this.$route.params.type + ' content'
-        }
+        this.$store.dispatch('fetchListData', {
+          type: this.$route.params.type
+        });
       }
     }
   }
