@@ -44,7 +44,7 @@
 
         if (this.error === '') {
           this.$store.commit('login');
-          this.$router.push('/news/document');
+          this.$router.push('/news/doc');
         } else {
           this.fail = true;
         }

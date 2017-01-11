@@ -38,7 +38,7 @@
         if (this.error !== '') {
           this.fail = true;
         } else {
-          this.$router.push('/news/document');
+          this.$router.push('/news/doc');
         }
       },
       refresh: function(type) {
