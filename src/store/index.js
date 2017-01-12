@@ -27,7 +27,7 @@ const store = new Vuex.Store({
       content: ''
     },
     pageNo: 1,
-    pageSize: 3,
+    pageSize: 5,
     totalPage: 1
   },
 
@@ -57,7 +57,8 @@ const store = new Vuex.Store({
 
       if (response.status === 'success') {
         let news = response.result;
-        if (news === []) {
+        if (!news.title) {
+          id = parseInt(id);
           for (var i = state.add[type].length - 1; i >= 0; i--) {
             if (state.add[type][i].id === id) {
               news = state.add[type][i];
@@ -105,13 +106,18 @@ const store = new Vuex.Store({
     setActiveNews(state, news) {
       state.activeNews = news;
     },
+    setPageNo(state, pageNo) {
+      state.pageNo = pageNo;
+    },
     add(state, { title, type, content }) {
-      const id = Math.random();
+      const id = Math.floor(Math.random()*10000);
       const date = new Date();
+      const dateStr = date.toISOString().split("T")[0];
+      console.log(date);
       state.add[type].push({
         id: id,
         title: title,
-        date: date,
+        date: dateStr,
         content: content
       });
     },

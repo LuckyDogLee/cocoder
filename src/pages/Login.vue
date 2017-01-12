@@ -12,7 +12,7 @@
       <button @click="login">登录</button>
     </div>
     <div class="row" v-if="fail">
-      <p>{{ error }}</p>
+      <p class="error">{{ error }}</p>
     </div>
   </div>
 </template>
@@ -94,5 +94,9 @@
 
     z-index: 998;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  }
+
+  .row .error {
+    color: red;
   }
 </style>

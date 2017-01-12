@@ -16,7 +16,7 @@
       <button @click="register">注册</button>
     </div>
     <div class="row" v-if="fail">
-      <p>{{ error }}</p>
+      <p class="error">{{ error }}</p>
     </div>
   </div>
 </template>
