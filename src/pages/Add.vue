@@ -22,7 +22,7 @@
       <button @click="add">添加</button>
     </div>
     <div class="row" v-if="fail">
-      <p>{{ error }}</p>
+      <p class="error">{{ error }}</p>
     </div>
   </div>
 </template>
@@ -37,6 +37,11 @@
         selected: '文档',
         error: '',
         error0: '请填完所有信息',
+      }
+    },
+    beforeCreate() {
+      if (!this.$store.state.hasLogin) {
+        this.$router.push('/login');
       }
     },
     computed: {
@@ -62,13 +67,12 @@
         }
 
         if (this.error === '') {
-          this.$store.commit('login');
           this.$store.commit('add', {
             title: this.title,
             type: this.type,
             content: this.content
           });
-          this.$router.push('/news/doc');
+          this.$router.push('/news/' + this.type);
         } else {
           this.fail = true;
         }
